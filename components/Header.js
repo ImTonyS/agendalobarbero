@@ -5,21 +5,21 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonSignin from "./ButtonSignin";
-import logo from "@/app/icon.png";
+import logo from "@/app/images/logo.png";
 import config from "@/config";
 
 const links = [
   {
     href: "/#pricing",
-    label: "Pricing",
+    label: "Login",
   },
   {
     href: "/#testimonials",
-    label: "Reviews",
+    label: "Register",
   },
   {
     href: "/#faq",
-    label: "FAQ",
+    label: "Preguntas",
   },
 ];
 
@@ -55,10 +55,10 @@ const Header = () => {
               className="w-8"
               placeholder="blur"
               priority={true}
-              width={32}
-              height={32}
+              width={80}
+              height={50}
             />
-            <span className="font-extrabold text-lg">{config.appName}</span>
+            
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
@@ -122,10 +122,9 @@ const Header = () => {
                 className="w-8"
                 placeholder="blur"
                 priority={true}
-                width={32}
+                width={50}
                 height={32}
               />
-              <span className="font-extrabold text-lg">{config.appName}</span>
             </Link>
             <button
               type="button"
