@@ -5,7 +5,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./styles/globals.css",
   ],
+
   theme: {
+    // colors: {
+    //   "cust-brown-base": "#543310",
+    //   "cust-brown-semibase": "#74512D",
+    //   "cust-brown-md": "#AF8F6F",
+    //   "cust-brown-light": "#F8F4E1",
+    // },
     extend: {
       backgroundImage: {
         gradient:

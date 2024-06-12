@@ -10,16 +10,12 @@ import config from "@/config";
 
 const links = [
   {
-    href: "/#pricing",
-    label: "Login",
-  },
-  {
-    href: "/#testimonials",
-    label: "Register",
-  },
-  {
     href: "/#faq",
     label: "Preguntas",
+  },
+  {
+    href: "/#pricing",
+    label: "Precio",
   },
 ];
 
@@ -37,7 +33,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-[#74512D]">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
@@ -52,13 +48,12 @@ const Header = () => {
             <Image
               src={logo}
               alt={`${config.appName} logo`}
-              className="w-8"
+              className="w-6xl"
               placeholder="blur"
               priority={true}
-              width={80}
+              width={120}
               height={50}
             />
-            
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
@@ -68,7 +63,7 @@ const Header = () => {
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
             onClick={() => setIsOpen(true)}
           >
-            <span className="sr-only">Open main menu</span>
+            <span className="sr-only">Abrir menu</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -113,16 +108,16 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link
               className="flex items-center gap-2 shrink-0 "
-              title={`${config.appName} hompage`}
+              title={`${config.appName} homepage`}
               href="/"
             >
               <Image
                 src={logo}
                 alt={`${config.appName} logo`}
-                className="w-8"
+                className="w-6xl"
                 placeholder="blur"
                 priority={true}
-                width={50}
+                width={80}
                 height={32}
               />
             </Link>
