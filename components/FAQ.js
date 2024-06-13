@@ -7,8 +7,8 @@ import { useRef, useState } from "react";
 
 const faqList = [
   {
-    question: "What do I get exactly?",
-    answer: <div className="space-y-2 leading-relaxed">Loreum Ipseum</div>,
+    question: "¿Qué es Agendabarbero?",
+    answer: <div className="space-y-2 leading-relaxed">Agendabarbero es un software diseñado para ayudar a los barberos a gestionar sus citas de manera fácil y organizada. Permite programar, modificar y cancelar citas, y también enviar recordatorios automáticos a los clientes.</div>,
   },
   {
     question: "Can I get a refund?",
@@ -92,9 +92,9 @@ const FAQ = () => {
     <section className="bg-base-200" id="faq">
       <div className="py-24 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
         <div className="flex flex-col text-left basis-1/2">
-          <p className="inline-block font-semibold text-primary mb-4">FAQ</p>
+          <p className="inline-block font-semibold text-primary mb-4">¿Qué es esto?</p>
           <p className="sm:text-4xl text-3xl font-extrabold text-base-content">
-            Frequently Asked Questions
+            Preguntas Frecuentes
           </p>
         </div>
 

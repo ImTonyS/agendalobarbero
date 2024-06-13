@@ -33,7 +33,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-[#74512D]">
+    <header className="bg-white">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
