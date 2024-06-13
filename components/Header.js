@@ -17,9 +17,13 @@ const links = [
     href: "/#pricing",
     label: "Precio",
   },
+  {
+    href: "/#cat",
+    label: "Cat"
+  }
 ];
 
-const cta = <ButtonSignin extraStyle="btn-primary" />;
+const cta = <ButtonSignin extraStyle="bg-barber-red text-white" />;
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
@@ -35,7 +39,7 @@ const Header = () => {
   return (
     <header className="bg-white">
       <nav
-        className="container flex items-center justify-between px-8 py-4 mx-auto"
+        className="flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
       >
         {/* Your logo/name on large screens */}
@@ -51,8 +55,8 @@ const Header = () => {
               className="w-6xl"
               placeholder="blur"
               priority={true}
-              width={120}
-              height={50}
+              width={60}
+              height={60}
             />
           </Link>
         </div>
@@ -87,7 +91,7 @@ const Header = () => {
             <Link
               href={link.href}
               key={link.href}
-              className="link link-hover"
+              className="link link-hover font-semibold"
               title={link.label}
             >
               {link.label}
