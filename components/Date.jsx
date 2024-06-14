@@ -97,12 +97,6 @@ export default function Date() {
     }
   }
 
-  const today = new Date.prototype.getDay();
-  console.log(today)
-  
-  
-
-
   return (
     <main className='py-20 px-10'>
     <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
