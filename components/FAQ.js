@@ -41,7 +41,7 @@ const Item = ({ item }) => {
         aria-expanded={isOpen}
       >
         <span
-          className={`flex-1 text-base-content ${isOpen ? "text-primary" : ""}`}
+          className={`flex-1 text-base-content ${isOpen ? "text-white" : ""}`}
         >
           {item?.question}
         </span>
@@ -88,7 +88,7 @@ const Item = ({ item }) => {
 
 const FAQ = () => {
   return (
-    <section className="bg-base-200" id="faq">
+    <section className="bg-barber-white" id="faq">
       <div className="py-24 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
         <div className="flex flex-col text-left basis-1/2">
           <p className="inline-block font-semibold text-barber-red mb-4">¿Qué es esto?</p>

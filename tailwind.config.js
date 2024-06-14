@@ -18,7 +18,6 @@ module.exports = {
         "barber-red": "#E24C3B",
         "barber-blue": "#0088E0",
         "barber-white": "#FBF3EF",
-
       },
       backgroundImage: {
         gradient:

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import config from "@/config";
-import logo from "@/app/icon.png";
+import logo from "@/app/images/logo.png";
 
 // Add the Footer to the bottom of your landing page and more.
 // The support link is connected to the config.js file. If there's no config.mailgun.supportEmail, the link won't be displayed.
@@ -31,7 +31,7 @@ const Footer = () => {
             </Link>
 
             <p className="mt-3 text-sm text-base-content/80">
-              {config.appDescription}
+            Tu nueva agenda electrónica, permitiendo a tu cliente agendar en segundos, ganas tú, ganan todos.
             </p>
             <p className="mt-3 text-sm text-base-content/60">
               Copyright © {new Date().getFullYear()} - All rights reserved
