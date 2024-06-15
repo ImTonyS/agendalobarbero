@@ -7,7 +7,7 @@ import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import Date from "@/components/Date.jsx";
+
 import Calendario from "@/components/Calendar.jsx";
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
         <Hero />
         <FAQ />
         <CTA />
-        <Date />
+        
         <Calendario />
       </main>
       <Footer />

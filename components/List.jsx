@@ -1,0 +1,61 @@
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
+import DottedButton from "./ButtonWrapper";
+
+const meetings = [
+    {
+      id: 1,
+      day: "14 June 2024",
+      hours: "10",
+      minutes: "00",
+    },
+    {
+      id: 2,
+      day: "14 June 2024",
+      hours: "10",
+      minutes: "30",
+    },
+    {
+      id: 3,
+      day: "15 June 2024",
+      hours: "11",
+      minutes: "00",
+    },
+    {
+      id: 4,
+      day: "30 June 2024",
+      hours: "11",
+      minutes: "30",
+    },
+    // More meetings...
+  ]
+
+
+
+export default function List({ selected }) {
+
+    return( 
+        <section className="w-full flex flex-col items-center mx-auto mt-12 md:mt-0 md:pl-14">
+        <h2 className=" self-start text-xl font-medium py-4 leading-6 text-gray-900">
+          Escoge la hora:
+        </h2>
+        <ol className="flex flex-col items-center w-full mt-3 space-y-3 text-sm leading-6">
+          {meetings.map((meeting) => (
+            selected === meeting.day &&
+                <li
+                key={meeting.id}
+              >
+                <DottedButton >
+                <p className="text-md font-medium">{meeting.hours}:{meeting.minutes}</p>
+                </DottedButton> 
+            
+            
+              </li>
+            
+            
+          ))}
+        </ol>
+      </section>
+    )
+}
+
+
