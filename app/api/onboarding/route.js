@@ -1,0 +1,31 @@
+import { NextResponse } from "next/server";
+import connectMongo from "@/libs/mongoose";
+import barbero from "@/models/Barbero.js";
+
+// This route is used to store the leads that are generated from the landing page.
+// The API call is initiated by <ButtonLead /> component
+// Duplicate emails just return 200 OK
+export async function POST(req) {
+  await connectMongo();
+
+  const body = await req.json();
+
+  if (!body.nombre) {
+    return NextResponse.json({ error: "Nombre es necesario" }, { status: 400 });
+  }
+  try {
+    const barbero = await barbero.findOne({ nombre: body.nombre, duracionesCitas: body.duracionesCitas  });
+
+    if (!barbero) {
+      await barbero.create({ nombre: body.nombre, duracionesCitas: body.duracionesCitas });
+
+      // Here you can add your own logic
+      // For instance, sending a welcome email (use the the sendEmail helper function from /libs/mailgun)
+    }
+
+    return NextResponse.json({});
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
