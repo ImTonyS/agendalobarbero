@@ -8,7 +8,7 @@ const barberoSchema = mongoose.Schema(
     required: true
    },
   duracionesCitas: { 
-    type: [Number], 
+    type: Number, 
     enum: [15, 30, 45], 
     required: true 
   },
