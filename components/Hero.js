@@ -22,7 +22,7 @@ const Hero = () => {
 
         <TestimonialsAvatars priority={true} />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 hidden md:block mx-auto">
         <OrbitingCirclesDemo />
       </div>
     </section>

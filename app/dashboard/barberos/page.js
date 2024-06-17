@@ -1,16 +1,39 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import apiClient from "@/libs/api";
+import { toast } from "react-hot-toast";
 
 export default function Barberos() {
+  const [barberos, setBarberos] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    console.log("sjbjsbjh");
+    const fetchBarberos = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiClient.get("/onboarding");
+        setBarberos(response.data);
+        console.log("Fetched barberos:", response.data);
+
+        toast.success("Barberos traidos");
+      } catch (error) {
+        console.log(error);
+        setBarberos([]);
+        toast.error("error al traer barberos");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBarberos();
   }, []);
 
-  const barberos = true;
+  if (isLoading) return <div>Loading ...</div>;
+
   return (
     <main className="max-w-3xl mx-auto mt-20 border-2">
-      {!barberos ? (
+      {barberos && barberos.length === 0 ? (
         <section className="flex justify-center items-center mx-auto h-screen">
           <div className="border-2 px-10 py-6">
             <div className="flex flex-col space-y-2 items-center justify-center max-w-3xl  bg-white px-4 py-5 sm:px-6">
@@ -29,10 +52,12 @@ export default function Barberos() {
               <h3 className="text-base font-semibold leading-6 text-gray-900">
                 Job Postings
               </h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit quam
-                corrupti consectetur.
-              </p>
+              <ul>
+                {barberos &&
+                  barberos.map((barbero, idx) => (
+                    <li key={idx}>{barbero.nombre}</li>
+                  ))}
+              </ul>
             </div>
             <div className="ml-4 mt-4 flex-shrink-0">
               <button

@@ -2,9 +2,6 @@ import { NextResponse } from "next/server";
 import connectMongo from "@/libs/mongoose";
 import Barbero from "@/models/Barbero";
 
-// This route is used to store the leads that are generated from the landing page.
-// The API call is initiated by <ButtonLead /> component
-// Duplicate emails just return 200 OK
 export async function POST(req) {
   await connectMongo();
 
@@ -30,6 +27,18 @@ export async function POST(req) {
     }
 
     return NextResponse.json({});
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
+
+export async function GET(req) {
+  await connectMongo();
+
+  try {
+    const barberos = await Barbero.find({});
+    return NextResponse.json(barberos);
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: e.message }, { status: 500 });

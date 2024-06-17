@@ -19,8 +19,8 @@ const links = [
   },
   {
     href: "/#cat",
-    label: "Cat"
-  }
+    label: "Cat",
+  },
 ];
 
 const cta = <ButtonSignin extraStyle="bg-barber-red text-white" />;
@@ -121,8 +121,8 @@ const Header = () => {
                 className="w-6xl"
                 placeholder="blur"
                 priority={true}
-                width={80}
-                height={32}
+                width={40}
+                height={40}
               />
             </Link>
             <button
