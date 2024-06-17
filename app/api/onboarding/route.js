@@ -14,10 +14,16 @@ export async function POST(req) {
     return NextResponse.json({ error: "Nombre es necesario" }, { status: 400 });
   }
   try {
-    const barbero = await Barbero.findOne({ nombre: body.nombre, duracionesCitas: body.duracionesCitas  });
+    const barbero = await Barbero.findOne({
+      nombre: body.nombre,
+      duracionesCitas: body.duracionesCitas,
+    });
 
     if (!barbero) {
-      await Barbero.create({ nombre: body.nombre, duracionesCitas: body.duracionesCitas });
+      await Barbero.create({
+        nombre: body.nombre,
+        duracionesCitas: body.duracionesCitas,
+      });
 
       // Here you can add your own logic
       // For instance, sending a welcome email (use the the sendEmail helper function from /libs/mailgun)
@@ -25,7 +31,6 @@ export async function POST(req) {
 
     return NextResponse.json({});
   } catch (e) {
-    console.log(e);
     console.error(e);
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
