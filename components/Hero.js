@@ -1,7 +1,6 @@
 import Image from "next/image";
 import TestimonialsAvatars from "./TestimonialsAvatars";
 import config from "@/config";
-import fotoHero from "@/app/images/barberHero.png";
 import { OrbitingCirclesDemo } from "./OrbitingCirclesDemo";
 
 const Hero = () => {
