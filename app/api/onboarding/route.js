@@ -13,13 +13,15 @@ export async function POST(req) {
   try {
     const barbero = await Barbero.findOne({
       nombre: body.nombre,
-      duracionesCitas: body.duracionesCitas,
+      apellido: body.apellido,
+      email: body.email,
     });
 
     if (!barbero) {
       await Barbero.create({
         nombre: body.nombre,
-        duracionesCitas: body.duracionesCitas,
+        apellido: body.apellido,
+        email: body.email,
       });
 
       // Here you can add your own logic

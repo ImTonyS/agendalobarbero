@@ -7,10 +7,19 @@ const barberoSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    apellido: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      lowcase: true,
+      trim: true,
+      required: true,
+    },
     duracionesCitas: {
       type: Number,
       enum: [15, 30, 45],
-      required: true,
     },
     //horarios: [horarioSchema],
     //barberia: { type: Schema.Types.ObjectId, ref: 'Barberia' }
