@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import toJSON from "./plugins/toJSON";
+import { Schema } from "mongoose";
 
 const barberoSchema = mongoose.Schema(
   {
@@ -23,6 +24,11 @@ const barberoSchema = mongoose.Schema(
     },
     //horarios: [horarioSchema],
     //barberia: { type: Schema.Types.ObjectId, ref: 'Barberia' }
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: false,
