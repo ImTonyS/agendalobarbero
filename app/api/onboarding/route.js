@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
 import connectMongo from "@/libs/mongoose";
 import Barbero from "@/models/Barbero";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   await connectMongo();
@@ -10,6 +10,7 @@ export async function POST(req) {
   if (!body.nombre) {
     return NextResponse.json({ error: "Nombre es necesario" }, { status: 400 });
   }
+
   try {
     const barbero = await Barbero.findOne({
       nombre: body.nombre,
@@ -27,8 +28,7 @@ export async function POST(req) {
       // Here you can add your own logic
       // For instance, sending a welcome email (use the the sendEmail helper function from /libs/mailgun)
     }
-
-    return NextResponse.json({});
+    return NextResponse.json({ status: 201 });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: e.message }, { status: 500 });

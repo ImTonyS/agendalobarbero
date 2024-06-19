@@ -1,37 +1,59 @@
 "use client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { NextResponse } from "next/server";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+// import z from "zod";
+
+//**const FormShcema = z.object({
+//   name: z.string().min(5).max(255),
+// });
+
+//   getData: ()=> {
+//     fetch()
+//   }
+// }
+
+// functions.getData;
+
+// (ZOD) const isValid = FormShcema.safeParse(data);
+// if (!isValid) throw Error("No es valido");
+
+// const [formInputsData, setFormInputsData] = useState({
+//   name: "",
+//   apellido: "",
+//   email: "",
+// });
 
 export default function New() {
   const [Loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
+  const [email, setEmail] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
-
     setLoading(true);
+
+    const formData = {
+      nombre: nombre,
+      apellido: apellido,
+      email: email,
+    };
+
     try {
-      const formData = {
-        nombre: name,
-        apellido: apellido,
-        email: email,
-      };
-      const response = await fetch("/api/onboarding", {
+      const data = await fetch("/api/onboarding", {
         method: "POST",
         body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        toast.success("Barbero creado correctamente");
-        setLoading(false);
-      } else {
-        toast.error("error");
-      }
+      console.log(data);
+      toast.success("Se logro");
+      // router.push("/dashboard/barberos");
     } catch (error) {
       toast.error("Error al crear el barbero");
-      setLoading(false);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -63,9 +85,11 @@ export default function New() {
             <div className="mt-2">
               <input
                 type="text"
-                name="name"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
+                name="nombre"
+                id="nombre"
+                onChange={(e) => {
+                  setNombre(e.target.value);
+                }}
                 autoComplete="given-name"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -84,7 +108,9 @@ export default function New() {
                 type="text"
                 name="apellido"
                 id="apellido"
-                onChange={(e) => setApellido(e.target.value)}
+                onChange={(e) => {
+                  setApellido(e.target.value);
+                }}
                 autoComplete="family-name"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -103,13 +129,19 @@ export default function New() {
                 id="email"
                 name="email"
                 type="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
-          <button type="submit" className="border-2 px-4 py-2">
+          <button
+            type="submit"
+            className="border-2 px-4 py-1.5 col-span-1
+          "
+          >
             Listo
           </button>
         </form>
