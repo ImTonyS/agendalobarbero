@@ -1,6 +1,18 @@
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/20/solid";
+import { PhoneIcon } from "@heroicons/react/20/solid";
 
-export default function BarCard({ name, apellido, email }) {
+export default function BarCard({ name, apellido, email, id }) {
+  const handleBorrar = async (id) => {
+    try {
+      const response = await fetch(`/api/onboarding/${id}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="max-w-3xl border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
       <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
@@ -32,16 +44,13 @@ export default function BarCard({ name, apellido, email }) {
               className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
               aria-hidden="true"
             />
-            <span>Phone</span>
+            <span>Llamar</span>
           </button>
           <button
+            onClick={() => handleBorrar(id)}
             type="button"
-            className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="relative ml-3 inline-flex items-center rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-white shadow-sm  ring-inset ring-gray-300 hover:bg-red-500"
           >
-            <EnvelopeIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
             <span>Borrar</span>
           </button>
         </div>

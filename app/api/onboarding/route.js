@@ -20,6 +20,7 @@ export async function POST(req) {
       apellido: body.apellido,
       email: body.email,
       user: session.user.id,
+      activo: true,
     });
 
     if (!barbero) {
@@ -28,6 +29,7 @@ export async function POST(req) {
         apellido: body.apellido,
         email: body.email,
         userId: session.user.id,
+        activo: true,
       });
 
       // Here you can add your own logic

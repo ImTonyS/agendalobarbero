@@ -29,6 +29,10 @@ const barberoSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
+    activo: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: false,

@@ -25,7 +25,11 @@ function classNames(...classes) {
 
 export default function Dashboard({ children }) {
   const path = usePathname();
-  const [current, setCurrent] = useState("/dashboard");
+
+  navigation.forEach((item) => {
+    item.current = false;
+    if (path === item.href) item.current = true;
+  });
 
   return (
     <>

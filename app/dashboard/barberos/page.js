@@ -84,14 +84,17 @@ export default function Barberos() {
           <div className="border-2 mt-2">
             <ul>
               {barberos &&
-                barberos.map((barbero, i) => (
-                  <BarCard
-                    key={i}
-                    name={barbero.nombre}
-                    apellido={barbero.apellido}
-                    email={barbero.email}
-                  ></BarCard>
-                ))}
+                barberos
+                  .filter((barbero) => barbero.activo)
+                  .map((barbero) => (
+                    <BarCard
+                      key={barbero.id}
+                      name={barbero.nombre}
+                      apellido={barbero.apellido}
+                      email={barbero.email}
+                      id={barbero.id}
+                    ></BarCard>
+                  ))}
             </ul>
           </div>
         </>
