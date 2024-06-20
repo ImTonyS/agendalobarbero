@@ -82,7 +82,7 @@ export default function Barberos() {
               barberos
                 .filter((barbero) => barbero.activo)
                 .map((barbero) => (
-                  <ul className="border-2">
+                  <ul key={barbero.id} className="border-2">
                     <BarCard
                       key={barbero.id}
                       name={barbero.nombre}
