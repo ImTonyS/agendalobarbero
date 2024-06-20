@@ -9,6 +9,7 @@ export default function Barberos() {
   const router = useRouter();
 
   const fetchBarberos = async () => {
+<<<<<<< HEAD
     toast.loading("Cargando...", "123");
     try {
       const response = await fetch("/api/onboarding", { method: "GET" });
@@ -17,15 +18,30 @@ export default function Barberos() {
     } catch (error) {
       console.log(error);
       toast.error("error al traer barberos");
+=======
+    try {
+      toast.loading("Cargando...", { id: "123" });
+
+      const response = await fetch("/api/onboarding", { method: "GET" });
+      const data = await response.json();
+      console.log(data);
+      setBarberos(data);
+    } catch (error) {
+      console.log(error);
+>>>>>>> 058b94d29ebb9966c32527299d4edcc6606c7d7c
     } finally {
       toast.dismiss("123");
     }
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     (async () => {
       await fetchBarberos();
     })();
+=======
+    fetchBarberos();
+>>>>>>> 058b94d29ebb9966c32527299d4edcc6606c7d7c
   }, []);
 
   return (
@@ -78,12 +94,12 @@ export default function Barberos() {
             </div>
           </div>
 
-          <div className="border-2 mt-2">
-            <ul>
-              {barberos &&
-                barberos
-                  .filter((barbero) => barbero.activo)
-                  .map((barbero) => (
+          <div className="mt-2">
+            {barberos &&
+              barberos
+                .filter((barbero) => barbero.activo)
+                .map((barbero) => (
+                  <ul className="border-2">
                     <BarCard
                       key={barbero.id}
                       name={barbero.nombre}
@@ -92,8 +108,8 @@ export default function Barberos() {
                       id={barbero.id}
                       fetchBarberos={fetchBarberos}
                     ></BarCard>
-                  ))}
-            </ul>
+                  </ul>
+                ))}
           </div>
         </>
       )}

@@ -9,7 +9,7 @@ export default function BarCard({ name, apellido, email, id, fetchBarberos }) {
       });
 
       const data = await response.json();
-      console.log(data);
+      if (response.ok) location.reload();
     } catch (error) {
       console.log(error);
     }
