@@ -7,27 +7,23 @@ import BarCard from "../_components/BarCard";
 export default function Barberos() {
   const [barberos, setBarberos] = useState(null);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+
+  const fetchBarberos = async () => {
+    try {
+      toast.loading("Cargando...", { id: "123" });
+
+      const response = await fetch("/api/onboarding", { method: "GET" });
+      const data = await response.json();
+      console.log(data);
+      setBarberos(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      toast.dismiss("123");
+    }
+  };
 
   useEffect(() => {
-    if (loading) return;
-    const fetchBarberos = async () => {
-      setLoading(true);
-      toast.loading("Cargando...", "123");
-      try {
-        const response = await fetch("/api/onboarding", { method: "GET" });
-        const data = await response.json();
-        console.log(data);
-        setBarberos(data);
-      } catch (error) {
-        console.log(error);
-        toast.error("error al traer barberos");
-      } finally {
-        toast.dismiss("123");
-        setLoading(false);
-      }
-    };
-
     fetchBarberos();
   }, []);
 
@@ -81,12 +77,12 @@ export default function Barberos() {
             </div>
           </div>
 
-          <div className="border-2 mt-2">
-            <ul>
-              {barberos &&
-                barberos
-                  .filter((barbero) => barbero.activo)
-                  .map((barbero) => (
+          <div className="mt-2">
+            {barberos &&
+              barberos
+                .filter((barbero) => barbero.activo)
+                .map((barbero) => (
+                  <ul className="border-2">
                     <BarCard
                       key={barbero.id}
                       name={barbero.nombre}
@@ -94,8 +90,8 @@ export default function Barberos() {
                       email={barbero.email}
                       id={barbero.id}
                     ></BarCard>
-                  ))}
-            </ul>
+                  </ul>
+                ))}
           </div>
         </>
       )}
