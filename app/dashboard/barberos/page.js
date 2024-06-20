@@ -2,23 +2,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import BarCard from "../_components/BarCard";
+import BarCard from "../../../components/barberos/BarCard";
 
 export default function Barberos() {
   const [barberos, setBarberos] = useState(null);
   const router = useRouter();
 
   const fetchBarberos = async () => {
-<<<<<<< HEAD
-    toast.loading("Cargando...", "123");
-    try {
-      const response = await fetch("/api/onboarding", { method: "GET" });
-      const data = await response.json();
-      setBarberos(data);
-    } catch (error) {
-      console.log(error);
-      toast.error("error al traer barberos");
-=======
     try {
       toast.loading("Cargando...", { id: "123" });
 
@@ -28,20 +18,13 @@ export default function Barberos() {
       setBarberos(data);
     } catch (error) {
       console.log(error);
->>>>>>> 058b94d29ebb9966c32527299d4edcc6606c7d7c
     } finally {
       toast.dismiss("123");
     }
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    (async () => {
-      await fetchBarberos();
-    })();
-=======
     fetchBarberos();
->>>>>>> 058b94d29ebb9966c32527299d4edcc6606c7d7c
   }, []);
 
   return (

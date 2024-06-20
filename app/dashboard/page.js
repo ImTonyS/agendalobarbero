@@ -1,4 +1,9 @@
 import ButtonAccount from "@/components/ButtonAccount";
+import { authOptions } from "@/libs/next-auth";
+import Barbershop from "@/models/Barbershop";
+import { getServerSession } from "next-auth";
+import connectMongo from "@/libs/mongoose";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -6,6 +11,12 @@ export const dynamic = "force-dynamic";
 // It's a server compoment which means you can fetch data (like the user profile) before the page is rendered.
 // See https://shipfa.st/docs/tutorials/private-page
 export default async function Dashboard() {
+  await connectMongo();
+  const session = await getServerSession(authOptions);
+  const barbershop = await Barbershop.findOne({ userId: session.user.id });
+
+  if (!barbershop) redirect("/onboarding/barbershop/new");
+
   return (
     <main className="min-h-screen p-8 pb-24">
       <section className="max-w-xl mx-auto space-y-8">
