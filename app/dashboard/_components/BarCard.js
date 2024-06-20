@@ -1,16 +1,20 @@
 import { PhoneIcon } from "@heroicons/react/20/solid";
 
-export default function BarCard({ name, apellido, email, id }) {
+export default function BarCard({ name, apellido, email, id, fetchBarberos }) {
   const handleBorrar = async (id) => {
+    console.log(id);
     try {
       const response = await fetch(`/api/onboarding/${id}`, {
         method: "DELETE",
       });
+
       const data = await response.json();
       console.log(data);
     } catch (error) {
       console.log(error);
     }
+
+    await fetchBarberos();
   };
 
   return (
@@ -47,7 +51,9 @@ export default function BarCard({ name, apellido, email, id }) {
             <span>Llamar</span>
           </button>
           <button
-            onClick={() => handleBorrar(id)}
+            onClick={async () => {
+              await handleBorrar(id);
+            }}
             type="button"
             className="relative ml-3 inline-flex items-center rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-white shadow-sm  ring-inset ring-gray-300 hover:bg-red-500"
           >

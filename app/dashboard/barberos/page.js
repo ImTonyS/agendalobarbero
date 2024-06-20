@@ -7,28 +7,25 @@ import BarCard from "../_components/BarCard";
 export default function Barberos() {
   const [barberos, setBarberos] = useState(null);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+
+  const fetchBarberos = async () => {
+    toast.loading("Cargando...", "123");
+    try {
+      const response = await fetch("/api/onboarding", { method: "GET" });
+      const data = await response.json();
+      setBarberos(data);
+    } catch (error) {
+      console.log(error);
+      toast.error("error al traer barberos");
+    } finally {
+      toast.dismiss("123");
+    }
+  };
 
   useEffect(() => {
-    if (loading) return;
-    const fetchBarberos = async () => {
-      setLoading(true);
-      toast.loading("Cargando...", "123");
-      try {
-        const response = await fetch("/api/onboarding", { method: "GET" });
-        const data = await response.json();
-        console.log(data);
-        setBarberos(data);
-      } catch (error) {
-        console.log(error);
-        toast.error("error al traer barberos");
-      } finally {
-        toast.dismiss("123");
-        setLoading(false);
-      }
-    };
-
-    fetchBarberos();
+    (async () => {
+      await fetchBarberos();
+    })();
   }, []);
 
   return (
@@ -93,6 +90,7 @@ export default function Barberos() {
                       apellido={barbero.apellido}
                       email={barbero.email}
                       id={barbero.id}
+                      fetchBarberos={fetchBarberos}
                     ></BarCard>
                   ))}
             </ul>
