@@ -1,109 +1,150 @@
 "use client";
-import Modal from "@/components/Modal";
-import { Button } from "@headlessui/react";
-import { useState } from "react";
-import Divider from "@/components/fields/Divider";
-import CheckBox from "@/components/fields/CheckBox";
-import operationDays from "@/data/operationdays";
 import { useForm, useFieldArray } from "react-hook-form";
-import { Main } from "next/document";
-import Select from "@/components/fields/Select";
-import SubmitButton2 from "@/components/fields/SubmitButton2";
-import toast from "react-hot-toast";
+import { useState } from "react";
+import { Input, SubmitButton, Divider, CheckBox } from "@/components/fields";
+import apiClient from "@/libs/api";
+import { toast } from "react-hot-toast";
+import { validatePhone as validatePhoneNumber } from "@/libs/formValidators";
+import config from "@/config";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { isValid } from "date-fns";
+import { parsePhoneNumber } from "libphonenumber-js";
+import operationDays from "@/data/operationdays";
 import daysParser from "@/data/daysParser";
-import { Input } from "@/components/fields";
+import { PlusCircleIcon, MinusCircleIcon } from "@heroicons/react/24/outline";
 
-import getTimezonesList from "@/data/getTimezonesList";
-
-export default function ModalTest() {
-  const [open, setOpen] = useState(false);
-
+const NewBarberForm = () => {
   const {
-    register,
-    handleSubmit,
     watch,
-    setError,
-    clearErrors,
+    control,
     getValues,
     setValue,
-    control,
+    register,
+    handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm();
 
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  //RHF WATCHES.......................................................
+  const daysWatch = watch("days");
+
+  //Fields
   const { fields, append, insert, remove } = useFieldArray({
     name: "hours",
     control,
   });
 
-  const handleOpenModal = () => {
-    setOpen(true);
-  };
-
-  const countryWatch = watch("phoneCountry");
-  const phoneWatch = watch("phone");
-  const daysWatch = watch("days");
-  const timezoneWatch = watch("timezone");
-  const [isLoading, setIsLoading] = useState(false);
+  //Functions...
 
   const onSubmit = async (data) => {
-    const { hours } = data;
-
+    setIsLoading(true);
     try {
-      ///validates phone
+      const { name, lastname, whatsappNumber, hours, days } = data;
+
+      const isValidNumber = await validatePhoneNumber(whatsappNumber, "MX");
+
+      if (!isValidNumber) {
+        setError("whatsappNumber", {
+          type: "manual",
+          message: "El numero de whatsapp no es valido",
+        });
+        return;
+      }
 
       if (!hours || hours.length === 0) {
         toast.error("Debes agregar al menos un horario");
         return; //this line, stops the function from executing
       }
-    } catch (error) {
-      toast.error("Error al validar horarios o teléfono");
-      return; //this line, stops the function from executing
-    }
 
-    try {
-      setIsLoading(true); //starts loading
-      //parse phone number
+      const parsedPhone = parsePhoneNumber(whatsappNumber, "MX");
+
       const dataToSave = {
+        name,
+        lastname,
+        whatsapp: {
+          number: parsedPhone.nationalNumber,
+          country: parsedPhone.country,
+          numberFull: parsedPhone.number,
+        },
         hours,
+        days,
       };
 
-      if (!lineData) {
-        //new line
-        await axios.post(`/api/admin/areas/${areaId}/lines/`, dataToSave);
-        toast.success("Línea Creada, reedireccionando...");
-        setTimeout(() => {
-          window.location.href = `/admin/areas/${areaId}/lines`;
-        }, 2000);
-        setIsLoading(false);
-      } else {
-        //Edit line
-        await axios.put(
-          `/api/admin/areas/${areaId}/lines/${lineData?._id}`,
-          dataToSave
-        );
-        toast.success("Línea Actualizada, reedireccionando...");
-        setTimeout(() => {
-          window.location.href = `/admin/areas/${areaId}/lines`;
-        }, 2000);
-        setIsLoading(false);
-      }
-    } catch (error) {
-      //check if error has a message, if not, show a generic error
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error("error saving line", error);
-        toast.error("Ocurrió un error al guardar la línea");
-      }
+      console.log(dataToSave);
+      await apiClient.post("/barber", dataToSave);
+      toast.success("Barber creado con éxito");
+      await new Promise((resolve) => setTimeout(resolve, 2000)); //wait 2 seconds
+      router.push("/dashboard");
+    } catch (e) {
+      console.error(e?.message);
+    } finally {
       setIsLoading(false);
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Button onClick={handleOpenModal}>Open</Button>
-      <Modal title={"Hola"} isModalOpen={open} setIsModalOpen={setOpen}>
-        HI IM A MODAL
-      </Modal>
+    <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
+      {/* Barbershop name */}
+      <div className="field my-6">
+        <Input
+          label="Nombre de tu barbero"
+          name="name"
+          type="text"
+          placeholder="Ej: Cesar"
+          register={{
+            ...register("name", {
+              //Se puede optimizar esto
+              required: {
+                value: true,
+                message: "El nombre de tu barbero es requerido",
+              },
+            }),
+          }}
+          errorMessage={errors.name?.message}
+        />
+      </div>
+
+      <div className="field my-6">
+        <Input
+          label="Apellido de tu barbero"
+          name="lastname"
+          type="text"
+          placeholder="Ej: Ramos"
+          register={{
+            ...register("lastname", {
+              //Se puede optimizar esto
+              required: {
+                value: true,
+                message: "El apellido de tu barbero es requerido",
+              },
+            }),
+          }}
+          errorMessage={errors.lastname?.message}
+        />
+      </div>
+
+      <div className="field my-6">
+        <Input
+          label="Numero de whatsapp"
+          name="whatsapp"
+          type="tel"
+          placeholder="Ej: 614-233-4322"
+          register={{
+            ...register("whatsappNumber", {
+              required: {
+                value: true,
+                message: "El numero de whatsapp es requerido",
+              },
+            }),
+          }}
+          errorMessage={errors.whatsappNumber?.message}
+        />
+      </div>
+
       <div className="max-w-3xl mx-auto wrapper my-4">
         <Divider label="Horarios del barbero"></Divider>
 
@@ -195,7 +236,9 @@ export default function ModalTest() {
                         <span className="px-0 hidden md:inline-block">
                           Agregar &nbsp;
                         </span>
-                        <span className="w-6 h-6 cursor-pointer ">hola</span>{" "}
+                        <span className="w-6 h-6 cursor-pointer ">
+                          <PlusCircleIcon color="green" />
+                        </span>{" "}
                       </div>
                     </div>
                     <div className="content font-normal">
@@ -276,7 +319,7 @@ export default function ModalTest() {
                                 remove(index);
                               }}
                             >
-                              Eliminar
+                              <MinusCircleIcon color="#ff0000" />
                             </span>{" "}
                           </div>
                         );
@@ -289,9 +332,10 @@ export default function ModalTest() {
           </>
         )}
       </div>
-      <div className="mt-8">
-        <SubmitButton2 isLoading={isLoading} label="submit" />
-      </div>
+
+      <SubmitButton isLoading={isLoading} text="Submit" className />
     </form>
   );
-}
+};
+
+export default NewBarberForm;
