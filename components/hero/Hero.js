@@ -5,7 +5,7 @@ import { OrbitingCirclesDemo } from "./OrbitingCirclesDemo";
 
 const Hero = () => {
   return (
-    <section className="max-w-7xl mx-auto bg-base-100 flex flex-col lg:flex-row items-start justify-center gap-16">
+    <section className="max-w-7xl mx-auto bg-base-100 flex flex-col lg:flex-row items-center justify-center gap-16">
       <div className="flex flex-1 flex-col gap-10 lg:gap-14 items-center justify-center text-center lg:text-left lg:items-start px-8 py-16">
         <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4">
           No pierdas <strong className="text-barber-red">más citas</strong>,
@@ -21,7 +21,7 @@ const Hero = () => {
 
         <TestimonialsAvatars priority={true} />
       </div>
-      <div className="flex-1 hidden md:block mx-auto">
+      <div className="flex-1 hidden lg:block mx-auto">
         <OrbitingCirclesDemo />
       </div>
     </section>

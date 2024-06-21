@@ -8,20 +8,31 @@ import { useRef, useState } from "react";
 const faqList = [
   {
     question: "¿Qué es Agendabarbero?",
-    answer: <div className="space-y-2 leading-relaxed">Agendabarbero es un software diseñado para ayudar a los barberos a gestionar sus citas de manera fácil y organizada. Permite programar, modificar y cancelar citas, y también enviar recordatorios automáticos a los clientes.</div>,
+    answer: (
+      <div className="space-y-2 leading-relaxed">
+        Agendabarbero es un software diseñado para ayudar a los barberos a
+        gestionar sus citas de manera fácil y organizada. Permite programar,
+        modificar y cancelar citas, y también enviar recordatorios automáticos a
+        los clientes.
+      </div>
+    ),
   },
   {
     question: "¿Cómo ha mejorado Agendabarbero la organización de tu trabajo?",
     answer: (
       <p>
-        Muchos barberos afirman que Agendabarbero ha mejorado significativamente la organización de su trabajo al permitirles tener una visión clara de su agenda diaria.
+        Muchos barberos afirman que Agendabarbero ha mejorado significativamente
+        la organización de su trabajo al permitirles tener una visión clara de
+        su agenda diaria.
       </p>
     ),
   },
   {
     question: "Tengo otra pregunta",
     answer: (
-      <div className="space-y-2 leading-relaxed">Increible, contáctanos por email</div>
+      <div className="space-y-2 leading-relaxed">
+        Increible, contáctanos por email
+      </div>
     ),
   },
 ];
@@ -41,7 +52,9 @@ const Item = ({ item }) => {
         aria-expanded={isOpen}
       >
         <span
-          className={`flex-1 text-base-content ${isOpen ? "text-white" : ""}`}
+          className={`flex-1 text-base-content ${
+            isOpen ? "text-[#E24C3B]" : ""
+          }`}
         >
           {item?.question}
         </span>
@@ -91,7 +104,9 @@ const FAQ = () => {
     <section className="bg-barber-white" id="faq">
       <div className="py-24 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
         <div className="flex flex-col text-left basis-1/2">
-          <p className="inline-block font-semibold text-barber-red mb-4">¿Qué es esto?</p>
+          <p className="inline-block font-semibold text-barber-red mb-4">
+            ¿Qué es esto?
+          </p>
           <p className="sm:text-4xl text-3xl font-extrabold text-base-content">
             Preguntas Frecuentes
           </p>
