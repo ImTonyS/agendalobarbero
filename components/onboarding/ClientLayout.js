@@ -35,7 +35,7 @@ export default function ClientLayout({ children }) {
           </div>
         </>
       </Disclosure>
-      <div className="mt-10">{children}</div>
+      <div>{children}</div>
     </>
   );
 }
