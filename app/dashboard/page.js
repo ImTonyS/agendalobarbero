@@ -4,6 +4,7 @@ import Barbershop from "@/models/Barbershop";
 import { getServerSession } from "next-auth";
 import connectMongo from "@/libs/mongoose";
 import { redirect } from "next/navigation";
+import Barber from "@/models/Barber";
 
 export const dynamic = "force-dynamic";
 
@@ -14,8 +15,10 @@ export default async function Dashboard() {
   await connectMongo();
   const session = await getServerSession(authOptions);
   const barbershop = await Barbershop.findOne({ userId: session.user.id });
-
+  const barber = await Barber.findOne({ userId: session.user.id });
+  // If the user is not a barbershop, redirect to the onboarding page
   if (!barbershop) redirect("/onboarding/barbershop/new");
+  if (!barber) redirect("/onboarding/barber/new");
 
   return (
     <main className="min-h-screen p-8 pb-24">

@@ -42,3 +42,32 @@ export async function POST(req) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+
+export async function GET(req) {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ error: "Not signed in" }, { status: 401 });
+
+  const db = await connectMongo();
+  const { id } = session.user;
+
+  try {
+    const user = await User.findById(id);
+    if (!user)
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+    const barber = await Barber.findOne({ userId: id });
+
+    if (!barber)
+      return NextResponse.json({ error: "Barber not found" }, { status: 404 });
+
+    return NextResponse.json({
+      message: "Barber details fetched",
+      status: 200,
+      data: barber,
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}

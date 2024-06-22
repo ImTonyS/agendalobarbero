@@ -21,35 +21,34 @@ const barberSchema = mongoose.Schema(
       },
       required: true,
     },
-    day: {
-      type: String,
-      required: true,
-      enum: [
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-        "sunday",
-      ],
+    days: {
+      monday: { type: Boolean, required: true },
+      tuesday: { type: Boolean, required: true },
+      wednesday: { type: Boolean, required: true },
+      thursday: { type: Boolean, required: true },
+      friday: { type: Boolean, required: true },
+      saturday: { type: Boolean, required: true },
+      sunday: { type: Boolean, required: true },
     },
-    hours: [
-      {
-        day: {
-          type: String,
-          required: true,
+    hours: {
+      type: [
+        {
+          day: {
+            type: String,
+            required: true,
+          },
+          start: {
+            type: String,
+            required: true,
+          },
+          end: {
+            type: String,
+            required: true,
+          },
         },
-        start: {
-          type: String,
-          required: true,
-        },
-        end: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+      ],
+      required: true,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

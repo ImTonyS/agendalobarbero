@@ -1,6 +1,12 @@
 import { PhoneIcon } from "@heroicons/react/20/solid";
 
-export default function BarCard({ name, apellido, email, id, fetchBarberos }) {
+export default function BarCard({
+  name,
+  lastname,
+  whatsapp,
+  id,
+  fetchBarberos,
+}) {
   const handleBorrar = async (id) => {
     console.log(id);
     try {
@@ -31,10 +37,10 @@ export default function BarCard({ name, apellido, email, id, fetchBarberos }) {
             </div>
             <div className="ml-4">
               <h3 className="text-base font-semibold leading-6 text-gray-900">
-                {name} {apellido}
+                {name} {lastname}
               </h3>
               <p className="text-sm text-gray-500">
-                <a href="#">{email}</a>
+                <a href={`https://wa.me/${whatsapp}`}>{whatsapp}</a>
               </p>
             </div>
           </div>
