@@ -45,6 +45,7 @@ const NewBarberForm = () => {
     setIsLoading(true);
     try {
       const { name, lastname, whatsappNumber, hours, days } = data;
+      console.log(hours);
 
       const isValidNumber = await validatePhoneNumber(whatsappNumber, "MX");
 
@@ -61,6 +62,29 @@ const NewBarberForm = () => {
         return; //this line, stops the function from executing
       }
 
+      const adjustedHours = data.hours.map((hour) => {
+        // Map through each interval in the hour to adjust times
+        const adjustedIntervals = hour.intervals.map((interval) => {
+          const startTime = new Date(`1970-01-01T${interval.start}`);
+          startTime.setMinutes(Math.round(startTime.getMinutes() / 30) * 30);
+          const endTime = new Date(`1970-01-01T${interval.end}`);
+          endTime.setMinutes(Math.round(endTime.getMinutes() / 30) * 30);
+
+          return {
+            ...interval,
+            start: startTime.toTimeString().slice(0, 5), // Format HH:MM
+            end: endTime.toTimeString().slice(0, 5), // Format HH:MM
+          };
+        });
+
+        return {
+          ...hour,
+          intervals: adjustedIntervals,
+        };
+      });
+
+      console.log(adjustedHours);
+
       const parsedPhone = parsePhoneNumber(whatsappNumber, "MX");
 
       const dataToSave = {
@@ -71,7 +95,7 @@ const NewBarberForm = () => {
           country: parsedPhone.country,
           numberFull: parsedPhone.number,
         },
-        hours,
+        hours: adjustedHours,
         days,
       };
 

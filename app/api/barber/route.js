@@ -48,7 +48,7 @@ export async function GET(req) {
   if (!session)
     return NextResponse.json({ error: "Not signed in" }, { status: 401 });
 
-  const db = await connectMongo();
+  await connectMongo();
   const { id } = session.user;
 
   try {
@@ -56,15 +56,15 @@ export async function GET(req) {
     if (!user)
       return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    const barber = await Barber.findOne({ userId: id });
+    const barbers = await Barber.find({ userId: id });
 
-    if (!barber)
+    if (!barbers)
       return NextResponse.json({ error: "Barber not found" }, { status: 404 });
 
     return NextResponse.json({
       message: "Barber details fetched",
       status: 200,
-      data: barber,
+      data: barbers,
     });
   } catch (e) {
     console.error(e);

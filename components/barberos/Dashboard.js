@@ -5,7 +5,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "@/app/images/logo.png";
+import Logo from "@/public/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import ButtonAccount from "../ButtonAccount";
