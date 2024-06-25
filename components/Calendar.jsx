@@ -43,8 +43,11 @@ const Calendar = () => {
       setSelected(clickedDay);
     };
   };
+
+  //TODO: Bring the barber data
+
   return (
-    <main className="py-4 px-2 sm:px-8 h-full">
+    <main className="pb-4 px-4 sm:px-6 h-full">
       <div className="flex flex-col lg:grid lg:grid-cols-2 lg:divide-x lg:divide-gray-500">
         <div className="md:pr-14">
           <h1 className="text-xl py-4 font-medium text-gray-900">
