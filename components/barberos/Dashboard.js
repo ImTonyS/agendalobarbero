@@ -14,9 +14,7 @@ import { useState } from "react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Barberos", href: "/dashboard/barberos", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Barberos", href: "/dashboard/barberos" },
 ];
 
 function classNames(...classes) {

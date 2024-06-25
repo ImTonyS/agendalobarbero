@@ -28,6 +28,7 @@
     "libphonenumber-js": "^1.11.4",
     "lucide-react": "^0.395.0",
     "mailgun.js": "^9.4.1",
+    "moment": "^2.30.1",
     "mongodb": "^5.9.2",
     "mongoose": "^7.6.10",
     "next": "^14.1.4",

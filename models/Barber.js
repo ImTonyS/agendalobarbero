@@ -33,13 +33,18 @@ const barberSchema = mongoose.Schema(
     hours: {
       type: [
         {
-          day: { type: String, required: true },
-          intervals: [
-            {
-              start: { type: String, required: true },
-              end: { type: String, required: true },
-            },
-          ],
+          day: {
+            type: String,
+            required: true,
+          },
+          start: {
+            type: String,
+            required: true,
+          },
+          end: {
+            type: String,
+            required: true,
+          },
         },
       ],
       required: true,

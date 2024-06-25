@@ -20,7 +20,6 @@ export default function Home() {
         <Hero />
         <FAQ />
         <CTA />
-
         <Calendario />
       </main>
       <Footer />

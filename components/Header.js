@@ -10,16 +10,8 @@ import config from "@/config";
 
 const links = [
   {
-    href: "/#faq",
-    label: "Preguntas",
-  },
-  {
-    href: "/#pricing",
-    label: "Precio",
-  },
-  {
-    href: "/#cat",
-    label: "Cat",
+    href: "#faq",
+    label: "¿Qué es esto?",
   },
 ];
 
@@ -93,6 +85,9 @@ const Header = () => {
               key={link.href}
               className="link link-hover font-semibold"
               title={link.label}
+              onClick={() => {
+                setIsOpen(false);
+              }}
             >
               {link.label}
             </Link>
@@ -151,13 +146,16 @@ const Header = () => {
           {/* Your links on small screens */}
           <div className="flow-root mt-6">
             <div className="py-4">
-              <div className="flex flex-col gap-y-4 items-start">
+              <div className="flex flex-col gap-y-4 items-center">
                 {links.map((link) => (
                   <Link
                     href={link.href}
                     key={link.href}
                     className="link link-hover"
                     title={link.label}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
                   >
                     {link.label}
                   </Link>
