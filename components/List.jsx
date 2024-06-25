@@ -14,7 +14,6 @@ function formatMilliseconds(ms) {
   return `${hours}:${minutes.toString().padStart(2, "0")}`;
 }
 
-//TODO: Necesito el currentmonth para poder mapearlo o sacar la fecha del selected ahi
 export default function List({ selected, currentMonth }) {
   const start = timeToMilliseconds("10:00");
   const end = timeToMilliseconds("13:00");
@@ -59,9 +58,9 @@ export default function List({ selected, currentMonth }) {
   return (
     <section className="w-full flex flex-col items-center mx-auto mt-12 md:mt-0 md:pl-14">
       <h2 className=" self-start text-xl font-medium py-4 leading-6 text-gray-900">
-        Escoge la hora:
+        Escoge la hora:{" "}
       </h2>
-      <ol className="flex flex-col items-center w-full mt-3 space-y-3 text-sm leading-6">
+      <ol className="flex flex-col items-center w-full py-3 space-y-3 text-sm leading-6 h-[20rem] overflow-y-auto">
         {times.map(
           (time, idx) =>
             selected === time.day &&

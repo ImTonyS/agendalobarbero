@@ -10,24 +10,17 @@ import {
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import List from "./List";
-
-const cita = {
-  day: "monday",
-  start: "10:00",
-  end: "13:00",
-};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Example = () => {
-  const formatear = (array) => {
-    return format(array, "d MMMM uuuu");
-  };
+const formatear = (array) => {
+  return format(array, "d MMMM uuuu");
+};
 
+const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selected, setSelected] = useState("");
 
@@ -35,8 +28,6 @@ const Example = () => {
   const endDay = endOfMonth(currentMonth);
   const days = eachDayOfInterval({ start: startDay, end: endDay });
   const today = format(new Date(), "d MMMM uuuu");
-
-  console.log(days);
 
   const handlePrevMonth = () => {
     setCurrentMonth(addMonths(currentMonth, -1));
@@ -53,8 +44,8 @@ const Example = () => {
     };
   };
   return (
-    <main className="py-20 px-10">
-      <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-500">
+    <main className="py-4 px-2 sm:px-8 h-full">
+      <div className="flex flex-col lg:grid lg:grid-cols-2 lg:divide-x lg:divide-gray-500">
         <div className="md:pr-14">
           <h1 className="text-xl py-4 font-medium text-gray-900">
             Escoge la fecha:
@@ -126,7 +117,7 @@ const Example = () => {
                     "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
                   )}
                   disabled={
-                    format(day, "d") < format(new Date(), "dd") &&
+                    format(day, "dd") < format(new Date(), "dd") &&
                     format(new Date(), "MMMM") === format(currentMonth, "MMMM")
                   }
                 >
@@ -143,6 +134,7 @@ const Example = () => {
             ))}
           </div>
         </div>
+
         <List selected={selected} currentMonth={currentMonth} />
         {/* Other parts of the component remain the same */}
       </div>
@@ -150,4 +142,4 @@ const Example = () => {
   );
 };
 
-export default Example;
+export default Calendar;

@@ -52,9 +52,7 @@ const Item = ({ item }) => {
         aria-expanded={isOpen}
       >
         <span
-          className={`flex-1 text-base-content ${
-            isOpen ? "text-[#E24C3B]" : ""
-          }`}
+          className={`flex-1 text-base-content ${isOpen ? "text-red-500" : ""}`}
         >
           {item?.question}
         </span>
@@ -101,24 +99,26 @@ const Item = ({ item }) => {
 
 const FAQ = () => {
   return (
-    <section className="bg-barber-white" id="faq">
-      <div className="py-24 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
-        <div className="flex flex-col text-left basis-1/2">
-          <p className="inline-block font-semibold text-barber-red mb-4">
-            ¿Qué es esto?
-          </p>
-          <p className="sm:text-4xl text-3xl font-extrabold text-base-content">
-            Preguntas Frecuentes
-          </p>
-        </div>
+    <>
+      <section className="bg-white" id="faq">
+        <div className="py-24 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
+          <div className="flex flex-col text-left basis-1/2">
+            <p className="inline-block font-semibold text-barber-red mb-4">
+              ¿Qué es esto?
+            </p>
+            <p className="sm:text-4xl text-3xl font-extrabold text-base-content">
+              Preguntas Frecuentes
+            </p>
+          </div>
 
-        <ul className="basis-1/2">
-          {faqList.map((item, i) => (
-            <Item key={i} item={item} />
-          ))}
-        </ul>
-      </div>
-    </section>
+          <ul className="basis-1/2">
+            {faqList.map((item, i) => (
+              <Item key={i} item={item} />
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
   );
 };
 
