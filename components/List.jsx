@@ -56,7 +56,7 @@ export default function List({ selected, currentMonth }) {
   //   console.log(time);
   // });
   return (
-    <section className="w-full flex flex-col items-center mx-auto mt-12 md:mt-0 md:pl-14">
+    <section className="w-full flex flex-col items-center mx-auto mt-12 pb-8  md:mt-0 md:pl-14">
       <h2 className=" self-start text-xl font-medium py-4 leading-6 text-gray-900">
         Escoge la hora:{" "}
       </h2>

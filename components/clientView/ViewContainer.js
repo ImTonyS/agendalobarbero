@@ -30,7 +30,7 @@ export default function ViewContainer() {
     <>
       <main className="flex justify-center items-center mx-auto bg-zinc-100 md:py-4 lg:h-screen lg:py-0 sm:px-6">
         <div className="flex flex-col w-full sm:border-2 sm:max-w-5xl rounded-3xl border-zinc-200 px-2 drop-shadow-md bg-white">
-          <div className="flex flex-col gap-y-4 sm:flex-row justify-between items-center py-6 px-6">
+          <div className="flex flex-col gap-y-4 sm:flex-row sm:justify-between justify-start items-start py-6 px-6">
             <div className="flex gap-x-4 items-center">
               <Image src={Logo} width={50} height={50} alt="Logo" />
               <div className="flex-1">
