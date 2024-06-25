@@ -36,6 +36,8 @@ const Example = () => {
   const days = eachDayOfInterval({ start: startDay, end: endDay });
   const today = format(new Date(), "d MMMM uuuu");
 
+  console.log(days);
+
   const handlePrevMonth = () => {
     setCurrentMonth(addMonths(currentMonth, -1));
   };
@@ -71,15 +73,17 @@ const Example = () => {
                 <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             )}
-
-            <button
-              type="button"
-              onClick={handleNextMonth}
-              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-            >
-              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-            </button>
+            {format(new Date(), "M") >= format(currentMonth, "M") && (
+              <button
+                type="button"
+                onClick={handleNextMonth}
+                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+              >
+                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+            )}
           </div>
+
           <div className="mt-10 grid grid-cols-7 text-center text-xs leading-6 text-gray-500">
             <div>S</div>
             <div>D</div>
@@ -102,6 +106,10 @@ const Example = () => {
                   onClick={handleClick(dayIdx)}
                   type="button"
                   className={classNames(
+                    format(new Date(), "MMMM") ===
+                      format(currentMonth, "MMMM") &&
+                      format(day, "dd") < format(new Date(), "dd") &&
+                      "cursor text-zinc-200 hover:bg-white",
                     formatear(day) === selected && "text-white",
                     formatear(day) === selected &&
                       today === formatear(day) &&
@@ -117,6 +125,10 @@ const Example = () => {
                       "font-semibold",
                     "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
                   )}
+                  disabled={
+                    format(day, "d") < format(new Date(), "dd") &&
+                    format(new Date(), "MMMM") === format(currentMonth, "MMMM")
+                  }
                 >
                   <time
                     dateTime={format(day, "yyyy-MM-dd")
@@ -131,7 +143,7 @@ const Example = () => {
             ))}
           </div>
         </div>
-        <List selected={selected} />
+        <List selected={selected} currentMonth={currentMonth} />
         {/* Other parts of the component remain the same */}
       </div>
     </main>
