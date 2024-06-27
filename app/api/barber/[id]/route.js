@@ -8,7 +8,7 @@ export async function DELETE(req, { params }) {
   const { id } = params;
 
   try {
-    const barber = await Barber.findOneAndUpdate(
+    await Barber.findOneAndUpdate(
       { _id: id },
       { active: false },
       { new: true }
