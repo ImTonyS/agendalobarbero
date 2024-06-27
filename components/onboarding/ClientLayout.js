@@ -5,7 +5,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "@/app/images/logo.png";
+import Logo from "@/public/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import ButtonAccount from "../ButtonAccount";
@@ -25,9 +25,9 @@ export default function ClientLayout({ children }) {
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
-              <div className="p-1 bg-white rounded-full">
+              <Link href={"/dashboard"} className="p-1 bg-white rounded-full">
                 <Image src={Logo} width={30} height={30} alt="Logo" />
-              </div>
+              </Link>
               <div className="px-1">
                 <ButtonAccount />
               </div>
@@ -35,7 +35,7 @@ export default function ClientLayout({ children }) {
           </div>
         </>
       </Disclosure>
-      <div className="mt-10">{children}</div>
+      <div>{children}</div>
     </>
   );
 }

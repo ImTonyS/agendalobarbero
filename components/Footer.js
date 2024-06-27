@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import config from "@/config";
-import logo from "@/app/images/logo.png";
+import Logo from "@/public/images/logo.png";
 
 // Add the Footer to the bottom of your landing page and more.
 // The support link is connected to the config.js file. If there's no config.mailgun.supportEmail, the link won't be displayed.
@@ -18,7 +18,7 @@ const Footer = () => {
               className="flex gap-2 justify-center md:justify-start items-center"
             >
               <Image
-                src={logo}
+                src={Logo}
                 alt={`${config.appName} logo`}
                 priority={true}
                 className="w-6 h-6"
@@ -31,7 +31,8 @@ const Footer = () => {
             </Link>
 
             <p className="mt-3 text-sm text-base-content/80">
-            Tu nueva agenda electrónica, permitiendo a tu cliente agendar en segundos, ganas tú, ganan todos.
+              Tu nueva agenda electrónica, permitiendo a tu cliente agendar en
+              segundos, ganas tú, ganan todos.
             </p>
             <p className="mt-3 text-sm text-base-content/60">
               Copyright © {new Date().getFullYear()} - All rights reserved

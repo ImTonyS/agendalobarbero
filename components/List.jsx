@@ -1,86 +1,171 @@
+import React, { useState, useEffect } from "react";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import DottedButton from "./ButtonWrapper";
-import { format } from "date-fns";
 
-const meetings = [
-  {
-    id: 1,
-    day: "14 June 2024",
-    hours: "10",
-    minutes: "00",
-    isFree: true,
-  },
-  {
-    id: 2,
-    day: "14 June 2024",
-    hours: "10",
-    minutes: "30",
-    isFree: true,
-  },
-  {
-    id: 3,
-    day: "14 June 2024",
-    hours: "11",
-    minutes: "00",
-    isFree: true,
-  },
-  {
-    id: 4,
-    day: "14 June 2024",
-    hours: "11",
-    minutes: "30",
-    isFree: true,
-  },
-  {
-    id: 5,
-    day: "14 June 2024",
-    hours: "12",
-    minutes: "00",
-    isFree: true,
-  },
-  {
-    id: 6,
-    day: "14 June 2024",
-    hours: "12",
-    minutes: "30",
-    isFree: true,
-  },
-  {
-    id: 20,
-    day: "14 June 2024",
-    hours: "13",
-    minutes: "00",
-    isFree: true,
-  },
-  {
-    id: 21,
-    day: "30 June 2024",
-    hours: "11",
-    minutes: "30",
-    isFree: true,
-  },
-  // More meetings...
-];
+function timeToMilliseconds(timeStr) {
+  const [hours, minutes] = timeStr.split(":");
+  return (parseInt(hours, 10) * 60 * 60 + parseInt(minutes, 10) * 60) * 1000;
+}
 
-export default function List({ selected }) {
+function formatMilliseconds(milliseconds) {
+  const date = new Date(milliseconds);
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  return `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}`;
+}
+
+export default function List({ selected, userId, currentMonth }) {
+  const [barberData, setBarberData] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [times, setTimes] = useState([]);
+
+  const startDay = startOfMonth(currentMonth);
+  const endDay = endOfMonth(currentMonth);
+  const days = eachDayOfInterval({ start: startDay, end: endDay });
+
+  const user = userId.userId;
+  const barberId = "667baaa896a4c3e7aaebd1d4";
+
+  const fetchBarberData = async () => {
+    try {
+      const response = await fetch(`/api/databarber/${user}`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      setBarberData(data.barbers);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchBarberData(userId);
+  }, [userId]);
+
+  const fetchAppointments = async () => {
+    try {
+      const response = await fetch(`/api/appointment/${barberId}`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      setAppointments(data.appointments);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchAppointments();
+  }, [barberData]);
+
+  useEffect(() => {
+    const newInitialTimes = [];
+    barberData.forEach((barber) => {
+      days.forEach((day) => {
+        barber.hours.forEach((hour) => {
+          if (hour.day === format(day, "EEEE").toLowerCase()) {
+            const start = timeToMilliseconds(hour.start);
+            const end = timeToMilliseconds(hour.end);
+
+            if (start > end) return null;
+            for (let current = start; current <= end; current += 1800000) {
+              // 30 minutes interval
+              newInitialTimes.push({
+                barberId: barber.id,
+                day: format(day, "EEEE").toLowerCase(),
+                dayMonth: format(day, "d MMMM uuuu"),
+                appointment: current,
+                status: true,
+              });
+            }
+          }
+        });
+      });
+    });
+
+    setTimes(newInitialTimes);
+  }, [barberData, currentMonth]);
+
+  const handleAppointClick = (selectedDay, selectedHour, barberId) => {
+    console.log(selected, selectedHour, barberId);
+
+    try {
+      fetch("/api/appointment", {
+        method: "POST",
+        body: JSON.stringify({
+          barberId: barberId,
+          day: format(selected, "EEEE").toLowerCase(),
+          selectedDay: selected,
+          appointment: selectedHour,
+          status: false, //Texto
+        }),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+    const updatedTimes = times.map((time) => {
+      if (
+        time.dayMonth.includes(selected) &&
+        time.day.includes(selectedDay) &&
+        time.appointment === selectedHour
+      ) {
+        console.log("Updating:", time);
+        return { ...time, status: false };
+      }
+      return time;
+    });
+
+    setTimes(updatedTimes);
+  };
+
+  useEffect(() => {
+    console.log(times);
+  }, [selected]);
+
   return (
-    <section className="w-full flex flex-col items-center mx-auto mt-12 md:mt-0 md:pl-14">
-      <h2 className=" self-start text-xl font-medium py-4 leading-6 text-gray-900">
+    <section className="w-full flex flex-col items-center mx-auto mt-12 pb-8 md:mt-0 md:pl-14">
+      <h2 className="self-start text-xl font-medium py-4 leading-6 text-gray-900">
         Escoge la hora:
       </h2>
-      <ol className="flex flex-col items-center w-full mt-3 space-y-3 text-sm leading-6">
-        {meetings.map(
-          (meeting) =>
-            selected === meeting.day &&
-            meeting.isFree && (
-              <li key={meeting.id}>
-                <DottedButton>
+      <ol className="flex flex-col items-center w-full h-10 py-3 space-y-3 text-sm leading-6 h-[20rem] overflow-y-auto">
+        {times.map((time, idx) => {
+          const isBooked = appointments.some(
+            (appointment) =>
+              appointment.appointment === time.appointment &&
+              format(selected, "yyyy-MM-dd") ===
+                format(new Date(appointment.selectedDay), "yyyy-MM-dd")
+          );
+
+          if (
+            time.day === format(selected, "EEEE").toLowerCase() &&
+            !isBooked &&
+            time.status
+          ) {
+            return (
+              <li key={idx}>
+                <DottedButton
+                  onClick={() => {
+                    handleAppointClick(
+                      time.day,
+                      time.appointment,
+                      time.barberId
+                    );
+                    fetchAppointments();
+                  }}
+                >
                   <p className="text-md font-medium">
-                    {meeting.hours}:{meeting.minutes}
+                    {formatMilliseconds(time.appointment)}
                   </p>
                 </DottedButton>
               </li>
-            )
-        )}
+            );
+          }
+
+          return null;
+        })}
       </ol>
     </section>
   );

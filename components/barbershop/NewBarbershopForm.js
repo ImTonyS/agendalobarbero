@@ -95,6 +95,7 @@ const NewBarberShopForm = () => {
           placeholder="Ej: Barber Studio"
           register={{
             ...register("name", {
+              //Se puede optimizar esto
               required: {
                 value: true,
                 message: "El nombre de tu barberia es requerido",

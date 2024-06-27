@@ -9,7 +9,7 @@ const SubmitButton = ({
     <button
       type="submit"
       disabled={isLoading}
-      className={`mt-8 btn btn-block btn-${style} ${className}`}
+      className={`mt-8 btn btn-block bg-barber-blue text-white ${className}`}
     >
       {isLoading ? (
         <span className="loading loading-spinner loading-sm"></span>

@@ -5,21 +5,13 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonSignin from "./ButtonSignin";
-import logo from "@/app/images/logo.png";
+import Logo from "@/public/images/logo.png";
 import config from "@/config";
 
 const links = [
   {
-    href: "/#faq",
-    label: "Preguntas",
-  },
-  {
-    href: "/#pricing",
-    label: "Precio",
-  },
-  {
-    href: "/#cat",
-    label: "Cat",
+    href: "#faq",
+    label: "¿Qué es esto?",
   },
 ];
 
@@ -50,7 +42,7 @@ const Header = () => {
             title={`${config.appName} hompage`}
           >
             <Image
-              src={logo}
+              src={Logo}
               alt={`${config.appName} logo`}
               className="w-6xl"
               placeholder="blur"
@@ -93,6 +85,9 @@ const Header = () => {
               key={link.href}
               className="link link-hover font-semibold"
               title={link.label}
+              onClick={() => {
+                setIsOpen(false);
+              }}
             >
               {link.label}
             </Link>
@@ -116,7 +111,7 @@ const Header = () => {
               href="/"
             >
               <Image
-                src={logo}
+                src={Logo}
                 alt={`${config.appName} logo`}
                 className="w-6xl"
                 placeholder="blur"
@@ -151,13 +146,16 @@ const Header = () => {
           {/* Your links on small screens */}
           <div className="flow-root mt-6">
             <div className="py-4">
-              <div className="flex flex-col gap-y-4 items-start">
+              <div className="flex flex-col gap-y-4 items-center">
                 {links.map((link) => (
                   <Link
                     href={link.href}
                     key={link.href}
                     className="link link-hover"
                     title={link.label}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
                   >
                     {link.label}
                   </Link>
