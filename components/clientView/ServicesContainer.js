@@ -1,8 +1,7 @@
 "use client";
 import Logo from "@/public/images/logo.png";
 import Image from "next/image";
-import Icons from "@/components/hero/OrbitingCirclesDemo";
-import Link from "next/link";
+
 import { useState, useEffect } from "react";
 import BarberBar from "./BarberBar";
 

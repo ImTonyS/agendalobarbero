@@ -26,7 +26,6 @@ export default function List({ selected, userId, currentMonth }) {
   const days = eachDayOfInterval({ start: startDay, end: endDay });
 
   const user = userId.userId;
-  const barberId = "667baaa896a4c3e7aaebd1d4";
 
   const fetchBarberData = async () => {
     try {
@@ -44,20 +43,22 @@ export default function List({ selected, userId, currentMonth }) {
     fetchBarberData(userId);
   }, [userId]);
 
-  const fetchAppointments = async () => {
+  const fetchAppointments = async (barberId) => {
     try {
       const response = await fetch(`/api/appointment/${barberId}`, {
         method: "GET",
       });
       const data = await response.json();
-      setAppointments(data.appointments);
+      setAppointments(data?.data);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    fetchAppointments();
+    if (barberData.length > 0) {
+      fetchAppointments(barberData[0].id);
+    }
   }, [barberData]);
 
   useEffect(() => {
@@ -132,11 +133,12 @@ export default function List({ selected, userId, currentMonth }) {
       </h2>
       <ol className="flex flex-col items-center w-full h-10 py-3 space-y-3 text-sm leading-6 h-[20rem] overflow-y-auto">
         {times.map((time, idx) => {
-          const isBooked = appointments.some(
+          const isBooked = appointments?.some(
             (appointment) =>
               appointment.appointment === time.appointment &&
               format(selected, "yyyy-MM-dd") ===
-                format(new Date(appointment.selectedDay), "yyyy-MM-dd")
+                format(new Date(appointment.selectedDay), "yyyy-MM-dd") &&
+              appointment.barberId !== time.barberId
           );
 
           if (

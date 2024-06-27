@@ -9,7 +9,7 @@ export async function POST(req) {
 
   try {
     const newAppointment = new Appointment({
-      barberId: new db.Types.ObjectId(barberId),
+      barberId: barberId,
       day: day,
       selectedDay: selectedDay,
       appointment: appointment,

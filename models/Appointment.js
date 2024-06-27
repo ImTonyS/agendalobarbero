@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 
 const appointmentSchema = mongoose.Schema({
   barberId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Barber",
     required: true,
   },
