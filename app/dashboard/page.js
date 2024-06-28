@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import connectMongo from "@/libs/mongoose";
 import { redirect } from "next/navigation";
 import Barber from "@/models/Barber";
+import List from "@/components/fields/List";
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +22,20 @@ export default async function Dashboard() {
   if (!barber) redirect("/onboarding/barber/new");
 
   return (
-    <main className="min-h-screen p-8 pb-24">
-      <section className="max-w-xl mx-auto space-y-8">
-        <ButtonAccount />
-        <h1 className="text-3xl md:text-4xl font-extrabold">Private Page</h1>
-      </section>
+    <main className="h-screen p-8 pb-2">
+      <div className="flex justify-between items-center mx-auto max-w-4xl">
+        <h1 className="text-3xl font-bold">Inicio</h1>
+        <div className="flex flex-col items-end">
+          <h2 className="text-xl font-semibold">user. {session.user.name}</h2>
+          <p className="text-lg font-medium">barber. {barbershop.name}</p>
+          <p>agendalobarbero.me/{barbershop.slug}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center mt-10  mx-auto max-w-4xl">
+        <h1 className="text-lg font-semibold">Citas agendadas</h1>
+        <List barber={barber} />
+      </div>
     </main>
   );
 }

@@ -3,6 +3,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Button } from "@headlessui/react";
+import { useRef } from "react";
 
 // A simple modal component which can be shown/hidden with a boolean and a function
 // Because of the setIsModalOpen function, you can't use it in a server component.
@@ -11,13 +12,13 @@ const Modal = ({
   setIsModalOpen,
   title,
   children,
-  handleSubmit = null,
+  handleAppointment = null,
 }) => {
   return (
     <Transition appear show={isModalOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50"
+        className="relative z-1000"
         onClose={() => setIsModalOpen(false)}
       >
         <Transition.Child
@@ -49,7 +50,7 @@ const Modal = ({
                     {title}
                   </Dialog.Title>
                   <button
-                    className="btn btn-square btn-ghost btn-sm"
+                    className="btn btn-square btn-ghost btn-sm hover:bg-red-500 hover:text-white"
                     onClick={() => setIsModalOpen(false)}
                   >
                     <svg
@@ -64,7 +65,15 @@ const Modal = ({
                 </div>
 
                 <section>{children}</section>
-                {handleSubmit && <Button onClick={handleSubmit}>OK</Button>}
+
+                {handleAppointment && (
+                  <Button
+                    className="hover:bg-red-300 z-50 mt-4 w-full"
+                    onClick={handleAppointment}
+                  >
+                    OK
+                  </Button>
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>
