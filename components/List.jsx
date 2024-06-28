@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import DottedButton from "./ButtonWrapper";
@@ -20,6 +21,7 @@ export default function List({ selected, userId, currentMonth }) {
   const [barberData, setBarberData] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [times, setTimes] = useState([]);
+  const [processing, setProcessing] = useState(false);
 
   const startDay = startOfMonth(currentMonth);
   const endDay = endOfMonth(currentMonth);
@@ -28,11 +30,14 @@ export default function List({ selected, userId, currentMonth }) {
   const user = userId.userId;
 
   const fetchBarberData = async () => {
+    if (processing) return;
+    setProcessing(true);
     try {
       const response = await fetch(`/api/databarber/${user}`, {
         method: "GET",
       });
       const data = await response.json();
+      setProcessing(false);
       setBarberData(data.barbers);
     } catch (e) {
       console.log(e);
@@ -40,7 +45,8 @@ export default function List({ selected, userId, currentMonth }) {
   };
 
   useEffect(() => {
-    fetchBarberData(userId);
+    if (!userId) return;
+    fetchBarberData();
   }, [userId]);
 
   const fetchAppointments = async (barberId) => {
@@ -63,11 +69,15 @@ export default function List({ selected, userId, currentMonth }) {
 
   useEffect(() => {
     const newInitialTimes = [];
+
+    if (barberData.length === 0) return;
+    // console.log("barberData", barberData);
     barberData.forEach((barber) => {
       days.forEach((day) => {
         barber.hours.forEach((hour) => {
           if (hour.day === format(day, "EEEE").toLowerCase()) {
             const start = timeToMilliseconds(hour.start);
+
             const end = timeToMilliseconds(hour.end);
 
             if (start > end) return null;
@@ -87,11 +97,9 @@ export default function List({ selected, userId, currentMonth }) {
     });
 
     setTimes(newInitialTimes);
-  }, [barberData, currentMonth]);
+  }, [barberData, selected]);
 
   const handleAppointClick = (selectedDay, selectedHour, barberId) => {
-    console.log(selected, selectedHour, barberId);
-
     try {
       fetch("/api/appointment", {
         method: "POST",
@@ -122,9 +130,7 @@ export default function List({ selected, userId, currentMonth }) {
     setTimes(updatedTimes);
   };
 
-  useEffect(() => {
-    console.log(times);
-  }, [selected]);
+  console.log(format(selected, "EEEE"));
 
   return (
     <section className="w-full flex flex-col items-center mx-auto mt-12 pb-8 md:mt-0 md:pl-14">
@@ -136,15 +142,21 @@ export default function List({ selected, userId, currentMonth }) {
           const isBooked = appointments?.some(
             (appointment) =>
               appointment.appointment === time.appointment &&
-              format(selected, "yyyy-MM-dd") ===
-                format(new Date(appointment.selectedDay), "yyyy-MM-dd") &&
-              appointment.barberId !== time.barberId
+              time.dayMonth === appointment.selectedDay
+          );
+
+          // const isPast = time.appointment < Date.now();
+
+          const isAvailable = appointments?.some(
+            (appointment) =>
+              appointment.status === false && appointment.id !== time.barberId
           );
 
           if (
-            time.day === format(selected, "EEEE").toLowerCase() &&
+            time.dayMonth === selected &&
             !isBooked &&
-            time.status
+            !isAvailable &&
+            time.status === true
           ) {
             return (
               <li key={idx}>
@@ -155,7 +167,6 @@ export default function List({ selected, userId, currentMonth }) {
                       time.appointment,
                       time.barberId
                     );
-                    fetchAppointments();
                   }}
                 >
                   <p className="text-md font-medium">
@@ -165,7 +176,6 @@ export default function List({ selected, userId, currentMonth }) {
               </li>
             );
           }
-
           return null;
         })}
       </ol>

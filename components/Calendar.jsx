@@ -30,10 +30,6 @@ const Calendar = (userId) => {
 
   const [selected, setSelected] = useState(today);
 
-  // useEffect(() => {
-  //   setCurrentMonth(new Date());
-  // });
-
   const handlePrevMonth = () => {
     setCurrentMonth(addMonths(currentMonth, -1));
   };
@@ -48,6 +44,8 @@ const Calendar = (userId) => {
       setSelected(clickedDay);
     };
   };
+
+  console.log("userId", userId);
 
   return (
     <main className="pb-4 px-4 sm:px-6 h-full">
@@ -80,16 +78,28 @@ const Calendar = (userId) => {
               </button>
             )}
           </div>
-
-          <div className="mt-10 grid grid-cols-7 text-center text-xs leading-6 text-gray-500">
-            <div>S</div>
-            <div>D</div>
-            <div>L</div>
-            <div>M</div>
-            <div>M</div>
-            <div>J</div>
-            <div>V</div>
-          </div>
+          {currentMonth.getMonth() === 5 && (
+            <div className="mt-10 grid grid-cols-7 text-center text-xs leading-6 text-gray-500">
+              <div>S</div>
+              <div>D</div>
+              <div>L</div>
+              <div>M</div>
+              <div>M</div>
+              <div>J</div>
+              <div>V</div>
+            </div>
+          )}
+          {currentMonth.getMonth() === 6 && (
+            <div className="mt-10 grid grid-cols-7 text-center text-xs leading-6 text-gray-500">
+              <div>L</div>
+              <div>M</div>
+              <div>M</div>
+              <div>J</div>
+              <div>V</div>
+              <div>S</div>
+              <div>D</div>
+            </div>
+          )}
           <div className="mt-2 grid grid-cols-7 text-sm">
             {days.map((day, dayIdx) => (
               <div

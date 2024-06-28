@@ -17,7 +17,7 @@ export default function ViewContainer({ barberId }) {
         method: "GET",
       });
       const data = await response.json();
-
+      if (data.barbers.length === 0) return console.log("No barber found");
       setData(data.barbers[0]);
     } catch (e) {
       console.log(e);
@@ -25,8 +25,9 @@ export default function ViewContainer({ barberId }) {
   };
 
   useEffect(() => {
+    if (!barberId) return;
     fetchBarber();
-  }, []);
+  }, [barberId]);
 
   return (
     <>
