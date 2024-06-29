@@ -5,12 +5,7 @@ import { format } from "date-fns";
 import checkIcon from "@/public/images/checkIcon.png";
 import Image from "next/image";
 
-const opciones = [
-  { name: "Barbero 1" },
-  { name: "Barbero 2" },
-  { name: "Barbero 3" },
-  { name: "Barbero 4" },
-];
+const opciones = [{ name: "Antonio" }, { name: "Carlos" }];
 const parameters = [
   "Nombre",
   "Apellido",
