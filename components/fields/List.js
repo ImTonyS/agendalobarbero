@@ -58,8 +58,10 @@ export default async function List({ barber }) {
       </select> */}
       <ul role="list" className="divide-y divide-gray-200">
         <div className="grid grid-cols-7 gap-x-6 items-center mt-10 mb-2 [div>p]:self-center">
-          {parameters.map((parameter) => (
-            <p className="text-sm font-medium text-gray-900">{parameter}</p>
+          {parameters.map((parameter, idx) => (
+            <p key={idx} className="text-sm font-medium text-gray-900">
+              {parameter}
+            </p>
           ))}
         </div>
         {appointments.map(
