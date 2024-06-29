@@ -5,6 +5,12 @@ import { format } from "date-fns";
 import checkIcon from "@/public/images/checkIcon.png";
 import Image from "next/image";
 
+const opciones = [
+  { name: "Barbero 1" },
+  { name: "Barbero 2" },
+  { name: "Barbero 3" },
+  { name: "Barbero 4" },
+];
 const parameters = [
   "Nombre",
   "Apellido",
@@ -45,17 +51,15 @@ export default async function List({ barber }) {
 
   return (
     <>
-      {/* <select
-        onChange={(e) => setSelectedBarber(e.target.value)}
+      <select
+        // onChange={(e) => setSelectedBarber(e.target.value)}
         className="mt-2 pr-10 rounded-lg text-black text-md font-semibold border-barber-red border-2"
       >
         <option value={null}>Selecciona un barbero</option>
-        {barber.map((barber) => (
-          <option key={barber.id} value={barber.id}>
-            {barber.name}
-          </option>
+        {opciones.map((opcion, idx) => (
+          <option key={idx}>{opcion.name}</option>
         ))}
-      </select> */}
+      </select>
       <ul role="list" className="divide-y divide-gray-200">
         <div className="grid grid-cols-7 gap-x-6 items-center mt-10 mb-2 [div>p]:self-center">
           {parameters.map((parameter, idx) => (
