@@ -75,7 +75,7 @@ const NewBarberShopForm = () => {
       await apiClient.post("/barbershop", dataToSave);
       toast.success("Negocio creado con éxito 🙌🏻");
       await new Promise((resolve) => setTimeout(resolve, 2000)); //wait 2 seconds
-      router.push("/dashboard");
+      router.push("/onboarding/barber/new");
     } catch (e) {
       console.error(e?.message);
     } finally {

@@ -10,7 +10,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ButtonAccount from "../ButtonAccount";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
@@ -49,8 +48,8 @@ export default function Dashboard({ children }) {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-[#F08748] text-white"
-                              : "text-zinc-50 hover:bg-[#DADADA] hover:text-gray-900",
+                              ? "bg-[#B80000] text-white"
+                              : "text-zinc-50 hover:bg-[#BF3131] hover:[text-gray-900]",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
                         >

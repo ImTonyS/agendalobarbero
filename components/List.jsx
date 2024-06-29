@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import DottedButton from "./ButtonWrapper";
 import Modal from "./Modal";
+import { Input, SubmitButton } from "@/components/fields";
+import { useForm } from "react-hook-form";
+import { set } from "mongoose";
 
 function timeToMilliseconds(timeStr) {
   const [hours, minutes] = timeStr.split(":");
@@ -29,6 +32,14 @@ export default function List({ selected, userId, currentMonth }) {
   const startDay = startOfMonth(currentMonth);
   const endDay = endOfMonth(currentMonth);
   const days = eachDayOfInterval({ start: startDay, end: endDay });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm();
 
   const user = userId.userId;
 
@@ -102,15 +113,12 @@ export default function List({ selected, userId, currentMonth }) {
     setTimes(newInitialTimes);
   }, [barberData, selected]);
 
-  const handleAppointClick = (
-    selectedDay,
-    selectedHour,
-    barberId,
-    isModalOpen
-  ) => {
-    console.log("Selected:", selectedDay, selectedHour, barberId, isModalOpen);
+  const handleAppointClick = (selectedDay, selectedHour, barberId, data) => {
+    console.log("Selected:", selectedDay, selectedHour, barberId, data);
     setIsModalOpen(true);
     try {
+      console.log("Values:", data.name, data.lastname, data.whatsappNumber);
+
       fetch("/api/appointment", {
         method: "POST",
         body: JSON.stringify({
@@ -118,9 +126,14 @@ export default function List({ selected, userId, currentMonth }) {
           day: format(selected, "EEEE").toLowerCase(),
           selectedDay: selected,
           appointment: selectedHour,
-          status: false, //Texto
+          name: data.name,
+          lastname: data.lastname,
+          whatsappNumber: data.whatsappNumber,
+          //Texto
         }),
       });
+
+      setIsModalOpen(false);
     } catch (e) {
       console.log(e);
     }
@@ -140,7 +153,17 @@ export default function List({ selected, userId, currentMonth }) {
     setTimes(updatedTimes);
   };
 
-  console.log(format(selected, "EEEE"));
+  //**SUBMIT DATA
+  const onSubmit = (formData) => {
+    if (selectedTime) {
+      handleAppointClick(
+        selectedTime.day,
+        selectedTime.appointment,
+        selectedTime.barberId,
+        formData
+      );
+    }
+  };
 
   return (
     <>
@@ -191,19 +214,72 @@ export default function List({ selected, userId, currentMonth }) {
 
         <Modal
           title="Agendar cita"
+          advice="Por favor, llena los siguientes campos para agendar tu cita, tener cuidado con la hora seleccionada ya que no puede haber cambios."
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          handleAppointment={() => {
-            setIsModalOpen(false);
-            if (selectedTime) {
-              handleAppointClick(
-                selectedTime.day,
-                selectedTime.appointment,
-                selectedTime.barberId
-              );
-            }
-          }}
-        ></Modal>
+        >
+          <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
+            {/* Barbershop name */}
+            <div className="field my-3 flex flex-col sm:flex-row gap-x-10 gap-y-6">
+              <div className="field flex ">
+                <Input
+                  label="Nombre"
+                  name="name"
+                  type="text"
+                  placeholder="Ej: Antonio"
+                  register={{
+                    ...register("name", {
+                      //Se puede optimizar esto
+                      required: {
+                        value: true,
+                        message: "Tu nombre es requerido",
+                      },
+                    }),
+                  }}
+                  errorMessage={errors.name?.message}
+                />
+              </div>
+              <div className="field flex">
+                <Input
+                  label="Apellido"
+                  name="lastname"
+                  type="text"
+                  placeholder="Ej: Villaverde"
+                  register={{
+                    ...register("lastname", {
+                      //Se puede optimizar esto
+                      required: {
+                        value: true,
+                        message: "El nombre de tu barberia es requerido",
+                      },
+                    }),
+                  }}
+                  errorMessage={errors.lastname?.message}
+                />
+              </div>
+              <div className="field flex">
+                <Input
+                  label="Numero de telefono"
+                  name="whatsappNumber"
+                  type="tel"
+                  placeholder="Ej: 614-233-4322"
+                  register={{
+                    ...register("whatsappNumber", {
+                      //Se puede optimizar esto
+                      required: {
+                        value: true,
+                        message: "El numero de whatsapp es requerido",
+                      },
+                    }),
+                  }}
+                  errorMessage={errors.whatsappNumber?.message}
+                />
+              </div>
+            </div>
+
+            <SubmitButton isLoading={processing} text="Agendar" className />
+          </form>
+        </Modal>
       </section>
     </>
   );

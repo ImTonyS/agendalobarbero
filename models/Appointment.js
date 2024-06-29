@@ -8,6 +8,18 @@ const appointmentSchema = mongoose.Schema({
     ref: "Barber",
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  whatsappNumber: {
+    type: String,
+    required: true,
+  },
   day: {
     type: String,
     required: true,
@@ -21,7 +33,7 @@ const appointmentSchema = mongoose.Schema({
     required: true,
   },
   status: {
-    type: Boolean,
+    type: String,
     required: true,
   },
 });

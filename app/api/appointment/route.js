@@ -5,7 +5,15 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   const db = await connectMongo();
   const body = await req.json();
-  const { barberId, day, selectedDay, appointment } = body;
+  const {
+    barberId,
+    day,
+    selectedDay,
+    appointment,
+    name,
+    lastname,
+    whatsappNumber,
+  } = body;
 
   try {
     const newAppointment = new Appointment({
@@ -13,7 +21,10 @@ export async function POST(req) {
       day: day,
       selectedDay: selectedDay,
       appointment: appointment,
-      status: true,
+      name: name,
+      lastname: lastname,
+      whatsappNumber: whatsappNumber,
+      status: "Pendiente",
     });
     await newAppointment.save();
 

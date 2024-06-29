@@ -11,6 +11,7 @@ const Modal = ({
   isModalOpen,
   setIsModalOpen,
   title,
+  advice,
   children,
   handleAppointment = null,
 }) => {
@@ -46,9 +47,17 @@ const Modal = ({
             >
               <Dialog.Panel className="relative w-full max-w-3xl h-full overflow-visible transform text-left align-middle shadow-xl transition-all rounded-xl bg-base-100 p-6 md:p-8">
                 <div className="flex justify-between items-center mb-4">
-                  <Dialog.Title as="h2" className="font-semibold">
-                    {title}
-                  </Dialog.Title>
+                  <div className="flex flex-col pr-20">
+                    <Dialog.Title as="h2" className="text-lg font-semibold">
+                      {title}
+                    </Dialog.Title>
+                    <Dialog.Title
+                      as="h2"
+                      className="text-sm text-barber-red font-medium"
+                    >
+                      {advice}
+                    </Dialog.Title>
+                  </div>
                   <button
                     className="btn btn-square btn-ghost btn-sm hover:bg-red-500 hover:text-white"
                     onClick={() => setIsModalOpen(false)}
@@ -65,15 +74,6 @@ const Modal = ({
                 </div>
 
                 <section>{children}</section>
-
-                {handleAppointment && (
-                  <Button
-                    className="hover:bg-red-300 z-50 mt-4 w-full"
-                    onClick={handleAppointment}
-                  >
-                    OK
-                  </Button>
-                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>
