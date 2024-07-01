@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 
 const faqList = [
   {
-    question: "¿Qué es Agendabarbero?",
+    question: "¿Qué es Agendalobarbero?",
     answer: (
       <div className="space-y-2 leading-relaxed">
         Agendabarbero es un software diseñado para ayudar a los barberos a
@@ -21,9 +21,9 @@ const faqList = [
     question: "¿Cómo ha mejorado Agendabarbero la organización de tu trabajo?",
     answer: (
       <p>
-        Muchos barberos afirman que Agendabarbero ha mejorado significativamente
-        la organización de su trabajo al permitirles tener una visión clara de
-        su agenda diaria.
+        Muchos barberos afirman que agendalobarbero ha mejorado
+        significativamente la organización de su trabajo al permitirles tener
+        una visión clara de su agenda diaria.
       </p>
     ),
   },
@@ -31,7 +31,7 @@ const faqList = [
     question: "Tengo otra pregunta",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        Increible, contáctanos por email
+        Increible, contáctame por instagram @tony_villaverde
       </div>
     ),
   },
