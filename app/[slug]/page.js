@@ -1,6 +1,6 @@
 import ServicesContainer from "@/components/clientView/ServicesContainer";
 
-export default function Test({ params }) {
+export default function Slug({ params }) {
   const { slug } = params;
   return <ServicesContainer slug={slug} />;
 }

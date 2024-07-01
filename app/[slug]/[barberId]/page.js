@@ -1,7 +1,6 @@
 import ViewContainer from "@/components/clientView/ViewContainer";
 
-export default function Test({ params }) {
+export default function BarberId({ params }) {
   const { barberId } = params;
-
   return <ViewContainer barberId={barberId} />;
 }

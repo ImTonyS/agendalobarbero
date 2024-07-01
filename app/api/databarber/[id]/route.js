@@ -14,7 +14,7 @@ export async function GET(req, { params }) {
 
     return NextResponse.json(
       {
-        barbers,
+        barber: barbers[0],
       },
       { status: 200 }
     );

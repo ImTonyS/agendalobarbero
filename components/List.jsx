@@ -48,11 +48,13 @@ export default function List({ selected, userId, currentMonth }) {
     setProcessing(true);
     try {
       const response = await fetch(`/api/databarber/${user}`, {
+        //This is the route to get the barber data
         method: "GET",
       });
       const data = await response.json();
       setProcessing(false);
-      setBarberData(data.barbers);
+      console.log("BarberData", data.barber);
+      setBarberData(data.barber);
     } catch (e) {
       console.log(e);
     }
@@ -76,9 +78,7 @@ export default function List({ selected, userId, currentMonth }) {
   };
 
   useEffect(() => {
-    if (barberData.length > 0) {
-      fetchAppointments(barberData[0].id);
-    }
+    fetchAppointments(barberData.id);
   }, [barberData]);
 
   useEffect(() => {

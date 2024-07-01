@@ -7,14 +7,14 @@ export async function GET(req, { params }) {
   const { id } = params;
 
   try {
-    const barbers = await Barber.find({ _id: id });
+    const barbers = await Barber.findOne({ _id: id });
 
     if (barbers.length === 0)
       return NextResponse.json({ error: "Barber not found" }, { status: 404 });
 
     return NextResponse.json(
       {
-        barbers,
+        barber,
       },
       { status: 200 }
     );
