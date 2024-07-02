@@ -14,8 +14,8 @@ export default function ServiceContainer({ slug }) {
       const response = await fetch(`/api/data/${slug}`, {
         method: "GET",
       });
-      const data = await response.json();
 
+      const data = await response.json();
       setData(data.data);
 
       fetchBarbers(data.data.userId);

@@ -10,11 +10,11 @@ export async function GET(req, { params }) {
     const barbers = await Barber.find({ userId: id });
 
     if (barbers.length === 0)
-      return NextResponse.json({ error: "Barber not found" }, { status: 404 });
+      return NextResponse.json({ error: "Barbers not found" }, { status: 404 });
 
     return NextResponse.json(
       {
-        barber: barbers[0],
+        data: barbers,
       },
       { status: 200 }
     );

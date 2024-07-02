@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import List from "./List";
 
 function classNames(...classes) {
@@ -44,8 +44,6 @@ const Calendar = (userId) => {
       setSelected(clickedDay);
     };
   };
-
-  console.log("userId", userId);
 
   return (
     <main className="pb-4 px-4 sm:px-6 h-full">

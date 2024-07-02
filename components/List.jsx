@@ -5,7 +5,7 @@ import DottedButton from "./ButtonWrapper";
 import Modal from "./Modal";
 import { Input, SubmitButton } from "@/components/fields";
 import { useForm } from "react-hook-form";
-import { set } from "mongoose";
+import apiClient from "@/libs/api";
 
 function timeToMilliseconds(timeStr) {
   const [hours, minutes] = timeStr.split(":");
@@ -37,8 +37,6 @@ export default function List({ selected, userId, currentMonth }) {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-    clearErrors,
   } = useForm();
 
   const user = userId.userId;
@@ -47,14 +45,10 @@ export default function List({ selected, userId, currentMonth }) {
     if (processing) return;
     setProcessing(true);
     try {
-      const response = await fetch(`/api/databarber/${user}`, {
-        //This is the route to get the barber data
-        method: "GET",
-      });
-      const data = await response.json();
+      const { data } = await apiClient.get(`/databarber/${user}`);
       setProcessing(false);
-      console.log("BarberData", data.barber);
-      setBarberData(data.barber);
+
+      setBarberData(data);
     } catch (e) {
       console.log(e);
     }
@@ -85,7 +79,7 @@ export default function List({ selected, userId, currentMonth }) {
     const newInitialTimes = [];
 
     if (barberData.length === 0) return;
-    // console.log("barberData", barberData);
+    console.log("barberData", barberData);
     barberData.forEach((barber) => {
       days.forEach((day) => {
         barber.hours.forEach((hour) => {

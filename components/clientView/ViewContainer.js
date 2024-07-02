@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Icons from "@/components/hero/OrbitingCirclesDemo";
 import Link from "next/link";
+import apiClient from "@/libs/api";
 
 export default function ViewContainer({ barberId }) {
   const [data, setData] = useState(null);
@@ -12,20 +13,17 @@ export default function ViewContainer({ barberId }) {
   const fetchBarber = async () => {
     //Trae la data de un barbero
     try {
-      const response = await fetch(`/api/getonebarber/${barberId}`, {
-        method: "GET",
-      });
-      const data = await response.json();
-
-      setData(data.barber); //Guarda en data
+      const { data } = await apiClient.get(`/getonebarber/${barberId}`);
+      setData(data); //Guarda en data
     } catch (e) {
       console.log(e);
     }
-
-    useEffect(() => {
-      fetchBarber();
-    }, [barberId]);
   };
+
+  useEffect(() => {
+    if (!barberId) return;
+    fetchBarber();
+  }, [barberId]);
 
   return (
     <>
