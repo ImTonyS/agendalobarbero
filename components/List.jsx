@@ -195,7 +195,7 @@ export default function List({ selected, userId, currentMonth }) {
                       setIsModalOpen(true);
                     }}
                   >
-                    <p className="text-md font-medium">
+                    <p className="text-md font-bold">
                       {formatMilliseconds(time.appointment)}
                     </p>
                   </DottedButton>

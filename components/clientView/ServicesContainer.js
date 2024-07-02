@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { useState, useEffect } from "react";
 import BarberBar from "./BarberBar";
+import apiClient from "@/libs/api";
 
 export default function ServiceContainer({ slug }) {
   const [data, setData] = useState(null);
@@ -17,6 +18,7 @@ export default function ServiceContainer({ slug }) {
 
       const data = await response.json();
       setData(data.data);
+      console.log(data.data.userId);
 
       fetchBarbers(data.data.userId);
     } catch (e) {
@@ -24,14 +26,11 @@ export default function ServiceContainer({ slug }) {
     }
   };
 
-  const fetchBarbers = async (data) => {
+  const fetchBarbers = async (userId) => {
     try {
-      const response = await fetch(`/api/databarber/${data}`, {
-        method: "GET",
-      });
-      const dataBarber = await response.json();
+      const { data } = await apiClient.get(`/databarber/${userId}`);
 
-      setBarbers(dataBarber.barbers);
+      setBarbers(data);
     } catch (e) {
       console.log(e);
     }

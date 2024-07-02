@@ -76,15 +76,15 @@ const Calendar = (userId) => {
               </button>
             )}
           </div>
-          {currentMonth.getMonth() === 5 && (
+          {currentMonth.getMonth() === 7 && (
             <div className="mt-10 grid grid-cols-7 text-center text-xs leading-6 text-gray-500">
+              <div>J</div>
+              <div>V</div>
               <div>S</div>
               <div>D</div>
               <div>L</div>
               <div>M</div>
               <div>M</div>
-              <div>J</div>
-              <div>V</div>
             </div>
           )}
           {currentMonth.getMonth() === 6 && (
